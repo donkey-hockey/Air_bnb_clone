@@ -2,6 +2,7 @@ from django.db import models
 from core import models as core_models
 from django_countries.fields import CountryField
 from users import models as user_models
+from django.urls import reverse
 
 
 class AbstractItem(core_models.TimeStampedModel):
@@ -87,3 +88,6 @@ class Room(core_models.TimeStampedModel):
     def save(self, *args, **kwargs):
         self.city = str.capitalize(self.city)
         super().save(*args, **kwargs)
+
+    def get_absolute_url(self):
+        return reverse("rooms:detail", kwargs={"pk": self.pk})
